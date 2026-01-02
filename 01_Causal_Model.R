@@ -31,3 +31,14 @@ ggdag_status(project_dag) +
   ggtitle('Causal Theory: The Effect of Education on Income',
           subtitle = 'Bolded Arrows for Presentation Clarity')
 
+#Simulate Complex Data
+
+set.seed(2025)
+n <- 5000
+##Ability is a hidden complex factor
+ability <- rnorm(n, 100, 15)
+##Education depends on ability in a non-linear way
+education <- 10 + 0.05 * (ability^1.2) + rnorm(n, 0, 2)
+##Income is the outcome we want to study
+income <- 2.5 * education + 0.1 * (ability^1.5) + rnorm(n, 0, 10)
+df <- data.frame(education, income, ability)
