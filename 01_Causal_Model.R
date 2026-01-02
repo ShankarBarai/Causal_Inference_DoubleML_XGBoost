@@ -1,0 +1,33 @@
+install.packages('tidyverse')
+install.packages('dagitty')
+install.packages('ggdag')
+install.packages('DoubleML')
+install.packages('mlr3')
+install.packages('mlr3learners')
+install.packages('reticulate')
+install.packages("xgboost")
+
+#Map the Causal Theory
+
+library(ggdag)
+library(ggplot2)
+##Theoretical Model
+##Education Causes Income, but Ability affects both!
+project_dag <- dagify(
+  Income ~ Education + Ability,
+  Education ~ Ability,
+  exposure = 'Education',
+  outcome = 'Income'
+)
+ggdag_status(project_dag) +
+  theme_dag() +
+  # Make the lines (edges) thicker and the arrows larger
+  geom_dag_edges(edge_width = 1.5, 
+                 arrow_directed = grid::arrow(length = grid::unit(15, 'pt'), type = 'closed')) +
+  # Make the nodes (circles) bigger
+  geom_dag_node(size = 27) +
+  # Make the text inside white and bold
+  geom_dag_text(color = 'white', size = 4, fontface = 'bold') +
+  ggtitle('Causal Theory: The Effect of Education on Income',
+          subtitle = 'Bolded Arrows for Presentation Clarity')
+
