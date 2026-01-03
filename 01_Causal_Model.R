@@ -60,3 +60,25 @@ dml_model = DoubleMLPLR$new(dml_data, learner_main, learner_nuisance)
 dml_model$fit()
 ## Checking results
 print(dml_model)
+
+# Creating a Coefficient Plot
+
+## Extract the result for plotting
+result_df <- data.frame(
+  Variable = 'Education',
+  Estimate = 2.44093,
+  StdError = 0.07048
+)
+## Creating the Chart
+ggplot(result_df, aes(x = Variable, y = Estimate)) +
+  geom_point(size = 4, color = 'darkblue') +
+  geom_errorbar(aes(ymin = Estimate-1.96*StdError,
+                    ymax = Estimate+1.96*StdError),
+                width = 0.2, color = 'darkblue') +
+  geom_hline(yintercept = 0, linetype = 'dashed', color = 'red') +
+  theme_minimal() +
+  labs(title = 'Causal Effect of Education on Income',
+       subtitle = 'Estimated Via Double Machine Learning(XGBoost)',
+       y = 'Estimated Effect Size',
+       y = '') +
+  coord_flip()
