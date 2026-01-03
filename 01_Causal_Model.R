@@ -55,7 +55,7 @@ dml_data = double_ml_data_from_data_frame(df, y_col = 'income', d_cols = 'educat
 learner_main = lrn('regr.xgboost')
 learner_nuisance = lrn('regr.xgboost')
 ## Create the Double ML Model
-dml_model = DoubleMLPLR$new(dml_data, learner_main, learner_nuisance)
+dml_model = DoubleMLPLR$new(dml_data, learner_main, learner_nuisance, n_folds = 5)
 ## Train the model
 dml_model$fit()
 ## Checking results
@@ -82,3 +82,4 @@ ggplot(result_df, aes(x = Variable, y = Estimate)) +
        y = 'Estimated Effect Size',
        y = '') +
   coord_flip()
+
